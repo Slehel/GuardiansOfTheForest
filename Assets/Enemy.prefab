@@ -54,6 +54,7 @@ MonoBehaviour:
   currentHp: 25
   corruptionDamage: 4
   NatureHeal: 0
+  wildness: 0
 --- !u!1 &6698761462814925762
 GameObject:
   m_ObjectHideFlags: 0
