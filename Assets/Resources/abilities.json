@@ -1,0 +1,16 @@
+{
+    "abilities": [
+        {
+            "name": "Fireball",
+            "damage": 50,
+            "cooldown": 5,
+            "range": 10
+        },
+        {
+            "name": "Ice Blast",
+            "damage": 30,
+            "cooldown": 7,
+            "range": 8
+        }
+    ]
+}
