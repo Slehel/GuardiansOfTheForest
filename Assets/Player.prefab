@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5203224644535115092}
   - component: {fileID: 4486108521627501022}
   - component: {fileID: 7200820731462163438}
+  - component: {fileID: 6796614075399784567}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -73,6 +74,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a30ba51a546461240829471f35a27b09, type: 2}
   - {fileID: 11400000, guid: 24d2fc74cb41f3446a4853991076326e, type: 2}
   - {fileID: 11400000, guid: 44882bcf2e0332d4ba6c2389c1396c8b, type: 2}
+--- !u!114 &6796614075399784567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258739886569705704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706c8538928c2464fa2ac088c3436775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityNames:
+  - Fireball
+  - Ice Blast
+  - Lightning Strike
+  - Heal
+  abilities: []
 --- !u!1 &8335325522465889594
 GameObject:
   m_ObjectHideFlags: 0

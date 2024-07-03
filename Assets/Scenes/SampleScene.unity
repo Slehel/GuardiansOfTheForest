@@ -3717,6 +3717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonFile: {fileID: 4900000, guid: 33e78f33b5681cb41b42434898cad0d5, type: 3}
+  newCharacterAbilities: {fileID: 6796614075399784567, guid: eed0948397fd2cc45bf1ea8a15549c14, type: 3}
 --- !u!4 &1983011892
 Transform:
   m_ObjectHideFlags: 0
