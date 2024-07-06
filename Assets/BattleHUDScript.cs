@@ -12,7 +12,6 @@ public class BattleHUDScript : MonoBehaviour
     public Slider NatureLevelSlider;
     public Slider EnemyHpSlider;
     public Image characterPortrait;
-    public Image enemyPortrait;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI wildnessText;
 
@@ -28,7 +27,6 @@ public class BattleHUDScript : MonoBehaviour
 
     public void SetEnemyHUD(Unit unit)
     {
-        enemyPortrait.sprite = unit.CharacterPortrait;
         EnemyHpSlider.maxValue = unit.maxHp;
         EnemyHpSlider.value = unit.currentHp;
 

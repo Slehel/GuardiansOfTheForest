@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 946521431861979588}
   - component: {fileID: 5704232813961123500}
-  - component: {fileID: 4088153517766898796}
   - component: {fileID: 7378273847537757294}
   m_Layer: 0
   m_Name: Wolf
@@ -141,23 +140,6 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &4088153517766898796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7269843200318052291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe6c9f63ff7dc8419d718a0b2f0fb29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &7378273847537757294
 MonoBehaviour:
   m_ObjectHideFlags: 0

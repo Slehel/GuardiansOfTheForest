@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5010394622676229112}
   - component: {fileID: 2303486462860736545}
-  - component: {fileID: 5568925882222912991}
   - component: {fileID: 4373202842247751255}
   m_Layer: 0
   m_Name: Bunny
@@ -141,23 +140,6 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &5568925882222912991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3069207799997666544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe6c9f63ff7dc8419d718a0b2f0fb29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &4373202842247751255
 MonoBehaviour:
   m_ObjectHideFlags: 0
