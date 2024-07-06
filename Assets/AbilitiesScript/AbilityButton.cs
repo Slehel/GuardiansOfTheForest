@@ -3,11 +3,11 @@ using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NewAbilityButton : MonoBehaviour
+public class AbilityButton : MonoBehaviour
 {
     public BasicAbility basicAbility;
 
-    public void SetupButton(NewCharacterAbilities characterAbilities, BasicAbility ability)
+    public void SetupButton(CharacterAbilities characterAbilities, BasicAbility ability)
     {
         this.basicAbility = ability;
         Button button = GetComponent<Button>();

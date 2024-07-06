@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9113852249242587064}
   - component: {fileID: 622030848228268022}
-  - component: {fileID: 7668072830936643430}
   - component: {fileID: 5207591259452665585}
   m_Layer: 0
   m_Name: Fox
@@ -57,23 +56,6 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &7668072830936643430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200320049915851330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe6c9f63ff7dc8419d718a0b2f0fb29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &5207591259452665585
 MonoBehaviour:
   m_ObjectHideFlags: 0

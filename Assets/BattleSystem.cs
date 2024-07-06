@@ -10,11 +10,22 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 
 public class BattleSystem : MonoBehaviour
 {
-    public GameObject playerPrefab;
-    public GameObject enemyPrefab;
+    // Prefabs for player team characters
+    public GameObject bearPrefab;
+    public GameObject bunnyPrefab;
+    public GameObject foxPrefab;
+    public GameObject wolfPrefab;
+    // Prefabs for enemy team characters
+    public GameObject evilEngineerPrefab;
+    public GameObject evilPolicemanPrefab;
+    public GameObject evilFirefighterPrefab;
+    public GameObject evilDoctorPrefab;
 
-    public Transform playerBattleStation;
-    public Transform enemyBattleStation;
+    public Transform playerBattleStation;// Parent for player characters
+    public Transform enemyBattleStation; // Parent for enemy characters
+
+    private List<GameObject> playerTeam = new List<GameObject>();
+    private List<GameObject> enemyTeam = new List<GameObject>();
 
     Unit playerUnit;
     Unit enemyUnit;
@@ -26,34 +37,35 @@ public class BattleSystem : MonoBehaviour
     public TextMeshProUGUI NarratorText;
 
     public CharacterAbilities bearCharacter;
-    public NewCharacterAbilities newbearcharacter;
     public AbilityButton[] abilityButtons;
-    public NewAbilityButton[] newAbilityButtons;
 
     public BattleState state;
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
+
         StartCoroutine(SetupBattle());
     }
 
     IEnumerator SetupBattle()
     {
         
-        GameObject playerGo = Instantiate(playerPrefab, playerBattleStation);
+        GameObject playerGo = Instantiate(bearPrefab, playerBattleStation);
         playerUnit = playerGo.GetComponent<Unit>();
-        GameObject enemyGo = Instantiate(enemyPrefab, enemyBattleStation);
+        GameObject enemyGo = Instantiate(evilEngineerPrefab, enemyBattleStation);
         enemyUnit = enemyGo.GetComponent<Unit>();
 
         NarratorText.text = " Your Crew is in danger! " + enemyUnit.unitName + " attacked them!";
         
         playerHUD.SetPlayerHUD(playerUnit);
         enemyHUD.SetEnemyHUD(enemyUnit);
+
+        //Setup Ability Buttons for playerCharacters
         for (int i = 0; i < abilityButtons.Length; i++)
-            if (i < newbearcharacter.abilities.Count)
+            if (i < bearCharacter.abilities.Count)
             {
-                newAbilityButtons[i].SetupButton(newbearcharacter, newbearcharacter.abilities[i]);
+                abilityButtons[i].SetupButton(bearCharacter, bearCharacter.abilities[i]);
             }
             else
             {
