@@ -11,7 +11,9 @@ public class AbilityLoader : MonoBehaviour
     {
         if (jsonFile != null)
         {
+            
             AbilityList abilityList = JsonUtility.FromJson<AbilityList>(jsonFile.text);
+            newCharacterAbilities.abilities.Clear();
             foreach (string abilityName in newCharacterAbilities.abilityNames)
             {
                 foreach (BasicAbility ability in abilityList.abilities)

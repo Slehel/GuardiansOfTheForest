@@ -26,7 +26,9 @@ public class BattleSystem : MonoBehaviour
     public TextMeshProUGUI NarratorText;
 
     public CharacterAbilities bearCharacter;
+    public NewCharacterAbilities newbearcharacter;
     public AbilityButton[] abilityButtons;
+    public NewAbilityButton[] newAbilityButtons;
 
     public BattleState state;
     // Start is called before the first frame update
@@ -49,14 +51,14 @@ public class BattleSystem : MonoBehaviour
         playerHUD.SetPlayerHUD(playerUnit);
         enemyHUD.SetEnemyHUD(enemyUnit);
         for (int i = 0; i < abilityButtons.Length; i++)
-            if (i < bearCharacter.abilities.Length)
+            if (i < newbearcharacter.abilities.Count)
             {
-                abilityButtons[i].SetupButton(bearCharacter, bearCharacter.abilities[i]);
+                newAbilityButtons[i].SetupButton(newbearcharacter, newbearcharacter.abilities[i]);
             }
-        else
-        {
-            Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character.");
-        }
+            else
+            {
+                Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character.");
+            }
         yield return new WaitForSeconds(2f);
 
         state = BattleState.PLAYERTURN;

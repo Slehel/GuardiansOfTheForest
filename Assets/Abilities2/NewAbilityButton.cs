@@ -3,28 +3,27 @@ using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityButton : MonoBehaviour
+public class NewAbilityButton : MonoBehaviour
 {
-    public int abilityIndex;
-    private CharacterAbilities characterAbilities;
+    public BasicAbility basicAbility;
 
-    public void SetupButton(CharacterAbilities characterAbilities, Ability ability)
+    public void SetupButton(NewCharacterAbilities characterAbilities, BasicAbility ability)
     {
-        this.characterAbilities = characterAbilities;
+        this.basicAbility = ability;
         Button button = GetComponent<Button>();
         TextMeshProUGUI buttonText = GetComponentInChildren<TextMeshProUGUI>();
 
         if (button != null && buttonText != null)
         {
             // Set the button text to the ability name
-            buttonText.text = ability.properties.abilityName;
+            buttonText.text = ability.name;
 
             // Add a listener to the button click event
             button.onClick.AddListener(() =>
             {
                 if (characterAbilities != null)
                 {
-                    characterAbilities.UseAbility(abilityIndex);
+                    basicAbility.useAbility(ability);
                 }
             });
         }
