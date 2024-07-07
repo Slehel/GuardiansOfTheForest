@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1799672254478179073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.91, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 946521431861979588}
   - component: {fileID: 5704232813961123500}
-  - component: {fileID: 7378273847537757294}
+  - component: {fileID: 5146921481373232587}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -140,7 +140,7 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &7378273847537757294
+--- !u!114 &5146921481373232587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,24 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityNames:
-  - Fireball
-  - Ice Blast
-  - Lightning Strike
-  - Heal
-  abilities:
-  - name: Fireball
-    damage: 50
-    cooldown: 5
-    range: 10
-  - name: Ice Blast
-    damage: 30
-    cooldown: 7
-    range: 8
-  - name: Lightning Strike
-    damage: 40
-    cooldown: 6
-    range: 9
-  - name: Heal
-    damage: 0
-    cooldown: 3
-    range: 5
+  - 
+  - 
+  - 
+  - 
+  abilities: []

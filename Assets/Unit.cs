@@ -16,6 +16,9 @@ public class Unit : MonoBehaviour
     public int NatureHeal;
     public int wildness;
 
+    public string[] abilityNames = new string[4];
+    public List<BasicAbility> abilities = new List<BasicAbility>();
+
     public bool TakeDamage(int damage)
     {
         currentHp -= damage;

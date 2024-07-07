@@ -27,8 +27,24 @@ public class BattleSystem : MonoBehaviour
     private List<GameObject> playerTeam = new List<GameObject>();
     private List<GameObject> enemyTeam = new List<GameObject>();
 
-    Unit playerUnit;
-    Unit enemyUnit;
+    private Vector3[] playerPositions = new Vector3[]
+    {
+        new Vector3(1, -3, 0),
+        new Vector3(-2.5f, -3.5f, 0),
+        new Vector3(-5, -3.75f, 0),
+        new Vector3(-7.5f, -3, 0)
+    };
+
+    private Vector3[] enemyPositions = new Vector3[]
+    {
+        new Vector3(3, -0.5f, 0),
+        new Vector3(5.5f, -1, 0),
+        new Vector3(8, -1, 0),
+        new Vector3(10.5f, -1, 0)
+    };
+
+    private Unit playerUnit;
+    private Unit enemyUnit;
 
     public BattleHUDScript playerHUD;
     public BattleHUDScript enemyHUD;    
@@ -50,11 +66,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
-        
-        GameObject playerGo = Instantiate(bearPrefab, playerBattleStation);
-        playerUnit = playerGo.GetComponent<Unit>();
-        GameObject enemyGo = Instantiate(evilEngineerPrefab, enemyBattleStation);
-        enemyUnit = enemyGo.GetComponent<Unit>();
+        AssignTeams();
+        InstantiateTeams();
 
         NarratorText.text = " Your Crew is in danger! " + enemyUnit.unitName + " attacked them!";
         
@@ -75,6 +88,55 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleState.PLAYERTURN;
         PlayerTurn();
+    }
+
+    void AssignTeams()
+    {
+        // Hardcoded assignment of prefabs to teams
+        playerTeam.Add(bearPrefab);
+        playerTeam.Add(bunnyPrefab);
+        playerTeam.Add(foxPrefab);
+        playerTeam.Add(wolfPrefab);
+
+        enemyTeam.Add(evilEngineerPrefab);
+        enemyTeam.Add(evilPolicemanPrefab);
+        enemyTeam.Add(evilFirefighterPrefab);
+        enemyTeam.Add(evilDoctorPrefab);
+    }
+
+    void InstantiateTeams()
+    {
+        InstantiateTeam(playerTeam, playerBattleStation, playerPositions, true);
+        InstantiateTeam(enemyTeam, enemyBattleStation, enemyPositions, false);
+    }
+
+    void InstantiateTeam(List<GameObject> team, Transform parent, Vector3[] positions, bool isPlayerTeam)
+    {
+        for (int i = 0; i < team.Count; i++)
+        {
+            GameObject prefab = team[i];
+            GameObject characterObject = Instantiate(prefab, parent);
+            characterObject.transform.localPosition = positions[i];
+
+            Unit instantiatedUnit = characterObject.GetComponent<Unit>();
+
+            if (isPlayerTeam)
+            {
+                if (prefab == bearPrefab)
+                {
+                    playerUnit = instantiatedUnit;
+                    Debug.Log("Player unit assigned: " + playerUnit.unitName);
+                }
+            }
+            else
+            {
+                if (prefab == evilEngineerPrefab)
+                {
+                    enemyUnit = instantiatedUnit;
+                    Debug.Log("Enemy unit assigned: " + enemyUnit.unitName);
+                }
+            }
+        }
     }
 
     IEnumerator PlayerAttack()

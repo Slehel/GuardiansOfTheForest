@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5203224644535115092}
   - component: {fileID: 4486108521627501022}
-  - component: {fileID: 6796614075399784567}
+  - component: {fileID: 5143191999337900769}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -56,7 +56,7 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &6796614075399784567
+--- !u!114 &5143191999337900769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,23 +73,7 @@ MonoBehaviour:
   - Ice Blast
   - Lightning Strike
   - Heal
-  abilities:
-  - name: Fireball
-    damage: 50
-    cooldown: 5
-    range: 10
-  - name: Ice Blast
-    damage: 30
-    cooldown: 7
-    range: 8
-  - name: Lightning Strike
-    damage: 40
-    cooldown: 6
-    range: 9
-  - name: Heal
-    damage: 0
-    cooldown: 3
-    range: 5
+  abilities: []
 --- !u!1 &6750418134483095976
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 6750418134483095976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.81, y: -0.16, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

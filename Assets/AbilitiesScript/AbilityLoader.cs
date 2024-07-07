@@ -11,7 +11,7 @@ public class AbilityLoader : MonoBehaviour
     {
         if (jsonFile != null)
         {
-            
+
             AbilityList abilityList = JsonUtility.FromJson<AbilityList>(jsonFile.text);
             CharacterAbilities.abilities.Clear();
             foreach (string abilityName in CharacterAbilities.abilityNames)
@@ -32,9 +32,9 @@ public class AbilityLoader : MonoBehaviour
             foreach (var ability in CharacterAbilities.abilities)
             {
                 Debug.Log("Ability Name: " + ability.name);
-               // Debug.Log("Damage: " + ability.damage);
-               // Debug.Log("Cooldown: " + ability.cooldown);
-               // Debug.Log("Range: " + ability.range);
+                // Debug.Log("Damage: " + ability.damage);
+                // Debug.Log("Cooldown: " + ability.cooldown);
+                // Debug.Log("Range: " + ability.range);
             }
         }
         else
