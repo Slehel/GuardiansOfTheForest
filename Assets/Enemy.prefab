@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9074297438563711091}
   - component: {fileID: 1507532328281165508}
-  - component: {fileID: 99361266892437871}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -56,18 +55,6 @@ MonoBehaviour:
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0
---- !u!114 &99361266892437871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5850960670664093915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706c8538928c2464fa2ac088c3436775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   abilityNames:
   - 
   - 

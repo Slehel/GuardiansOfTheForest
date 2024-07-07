@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5010394622676229112}
   - component: {fileID: 2303486462860736545}
-  - component: {fileID: 7831801416684635124}
   m_Layer: 0
   m_Name: Bunny
   m_TagString: Untagged
@@ -140,21 +139,9 @@ MonoBehaviour:
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
---- !u!114 &7831801416684635124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3069207799997666544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706c8538928c2464fa2ac088c3436775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   abilityNames:
-  - Fireball
-  - Fireball
-  - Ice Blast
-  - Ice Blast
+  - 
+  - 
+  - 
+  - 
   abilities: []

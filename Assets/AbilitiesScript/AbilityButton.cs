@@ -7,7 +7,7 @@ public class AbilityButton : MonoBehaviour
 {
     public BasicAbility basicAbility;
 
-    public void SetupButton(CharacterAbilities characterAbilities, BasicAbility ability)
+    public void SetupButton(Unit unit, BasicAbility ability)
     {
         this.basicAbility = ability;
         Button button = GetComponent<Button>();
@@ -21,7 +21,7 @@ public class AbilityButton : MonoBehaviour
             // Add a listener to the button click event
             button.onClick.AddListener(() =>
             {
-                if (characterAbilities != null)
+                if (unit != null)
                 {
                     basicAbility.useAbility(ability);
                 }

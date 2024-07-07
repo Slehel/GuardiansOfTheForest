@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilityLoader : MonoBehaviour
 {
     public TextAsset jsonFile;
-    public CharacterAbilities CharacterAbilities;
+    public Unit characterAbilities;
 
     void Start()
     {
@@ -13,23 +13,23 @@ public class AbilityLoader : MonoBehaviour
         {
 
             AbilityList abilityList = JsonUtility.FromJson<AbilityList>(jsonFile.text);
-            CharacterAbilities.abilities.Clear();
-            foreach (string abilityName in CharacterAbilities.abilityNames)
+            characterAbilities.abilities.Clear();
+            foreach (string abilityName in characterAbilities.abilityNames)
             {
                 foreach (BasicAbility ability in abilityList.abilities)
                 {
                     if (ability.name == abilityName)
                     {
-                        CharacterAbilities.abilities.Add(ability);
+                        characterAbilities.abilities.Add(ability);
                         break;  // Exit the inner loop once a match is found
                     }
                 }
             }
 
             // Log abilities of the character to verify
-            string parentObjectName = CharacterAbilities.gameObject.name;
+            string parentObjectName = characterAbilities.gameObject.name;
             Debug.Log("Character Abilities for " + parentObjectName + ":");
-            foreach (var ability in CharacterAbilities.abilities)
+            foreach (var ability in characterAbilities.abilities)
             {
                 Debug.Log("Ability Name: " + ability.name);
                 // Debug.Log("Damage: " + ability.damage);

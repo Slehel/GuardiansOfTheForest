@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8637496299473131268}
   - component: {fileID: 863736761763138250}
-  - component: {fileID: 7675684235676651607}
   m_Layer: 0
   m_Name: Policeman
   m_TagString: Untagged
@@ -56,18 +55,6 @@ MonoBehaviour:
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0
---- !u!114 &7675684235676651607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107950951878631073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706c8538928c2464fa2ac088c3436775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   abilityNames:
   - 
   - 

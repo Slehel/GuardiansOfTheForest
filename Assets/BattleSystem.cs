@@ -51,8 +51,6 @@ public class BattleSystem : MonoBehaviour
 
 
     public TextMeshProUGUI NarratorText;
-
-    public CharacterAbilities bearCharacter;
     public AbilityButton[] abilityButtons;
 
     public BattleState state;
@@ -76,9 +74,9 @@ public class BattleSystem : MonoBehaviour
 
         //Setup Ability Buttons for playerCharacters
         for (int i = 0; i < abilityButtons.Length; i++)
-            if (i < bearCharacter.abilities.Count)
+            if (i < playerUnit.abilities.Count)
             {
-                abilityButtons[i].SetupButton(bearCharacter, bearCharacter.abilities[i]);
+                abilityButtons[i].SetupButton(playerUnit, playerUnit.abilities[i]);
             }
             else
             {
