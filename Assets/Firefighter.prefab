@@ -46,13 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3408483bc9d944fba6f3bf3ef9aec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Evil Engineer
+  unitName: Firefighter
   unitLevel: 1
-  UnitClass: Engineer
+  UnitClass: Firefighter
   CharacterPortrait: {fileID: 21300000, guid: 39228c7821e01c54c9e2f948814901d7, type: 3}
-  damage: 5
-  maxHp: 25
-  currentHp: 25
+  damage: 8
+  maxHp: 32
+  currentHp: 32
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0

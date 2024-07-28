@@ -19,6 +19,21 @@ public class Unit : MonoBehaviour
     public string[] abilityNames = new string[4];
     public List<BasicAbility> abilities = new List<BasicAbility>();
 
+    private BattleSystem battleSystem;
+
+    void Start()
+    {
+        battleSystem = FindObjectOfType<BattleSystem>();
+    }
+
+    void OnMouseDown()
+    {
+        if (battleSystem != null && battleSystem.state == BattleState.PLAYERTURN)
+        {
+            battleSystem.OnEnemyClicked(this);
+        }
+    }
+
     public bool TakeDamage(int damage)
     {
         currentHp -= damage;

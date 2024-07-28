@@ -10,23 +10,27 @@ public class BasicAbility
     public float cooldown;
     public float range;
 
-    public void useAbility(BasicAbility ability)
+    public void useAbility(Unit target)
     {
-       if(ability.name == "Fireball")
+       if(name == "Fireball")
         {
-            Debug.Log("Fireball deals 5 damage");
+            target.TakeDamage(damage);
+            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
         }
-        if (ability.name == "Ice Blast")
+        if (name == "Ice Blast")
         {
-            Debug.Log("Ice Blast deals 5 damage");
+            target.TakeDamage(damage);
+            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
         }
-        if (ability.name == "Lightning Strike")
+        if (name == "Lightning Strike")
         {
-            Debug.Log("Lightning Strike deals 5 damage");
+            target.TakeDamage(damage);
+            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
         }
-        if (ability.name == "Heal")
+        if (name == "Heal")
         {
-            Debug.Log("Heal deals 5 damage");
+            target.TakeDamage(damage);
+            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
         }
     }
 }

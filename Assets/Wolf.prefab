@@ -130,13 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3408483bc9d944fba6f3bf3ef9aec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Bearimo Maximus
+  unitName: Wolfus Brutus
   unitLevel: 1
-  UnitClass: Paladin
+  UnitClass: Rogue
   CharacterPortrait: {fileID: 21300000, guid: 2de857074320e724ab34201bdd6eda85, type: 3}
-  damage: 8
-  maxHp: 31
-  currentHp: 31
+  damage: 9
+  maxHp: 34
+  currentHp: 34
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0

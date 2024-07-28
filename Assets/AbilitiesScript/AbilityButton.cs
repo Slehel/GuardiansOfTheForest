@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class AbilityButton : MonoBehaviour
 {
     public BasicAbility basicAbility;
+    private BattleSystem battleSystem;
 
-    public void SetupButton(Unit unit, BasicAbility ability)
+    public void SetupButton(Unit unit, BasicAbility ability, BattleSystem battleSystem)
     {
         this.basicAbility = ability;
+        this.battleSystem = battleSystem;
         Button button = GetComponent<Button>();
         TextMeshProUGUI buttonText = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -23,7 +25,8 @@ public class AbilityButton : MonoBehaviour
             {
                 if (unit != null)
                 {
-                    basicAbility.useAbility(ability);
+                    //basicAbility.useAbility(ability); ez a regi 
+                    battleSystem.OnAbilityButtonClicked(basicAbility);
                 }
             });
         }

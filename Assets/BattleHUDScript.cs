@@ -32,6 +32,10 @@ public class BattleHUDScript : MonoBehaviour
 
 
     }
+    public void SetBearHP(Unit unit)
+    {
+        healthText.text = unit.currentHp + "/" + unit.maxHp;
+    }
 
     public void SetEnemySliderHP(int hp)
     {

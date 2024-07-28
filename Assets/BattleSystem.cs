@@ -24,6 +24,9 @@ public class BattleSystem : MonoBehaviour
     public Transform playerBattleStation;// Parent for player characters
     public Transform enemyBattleStation; // Parent for enemy characters
 
+    private BasicAbility selectedAbility;
+    private Unit selectedUnit;
+
     private List<GameObject> playerTeam = new List<GameObject>();
     private List<GameObject> enemyTeam = new List<GameObject>();
 
@@ -43,8 +46,14 @@ public class BattleSystem : MonoBehaviour
         new Vector3(10.5f, -1, 0)
     };
 
-    private Unit playerUnit;
-    private Unit enemyUnit;
+    private Unit bearUnit;
+    private Unit foxUnit;
+    private Unit wolfUnit;
+    private Unit bunnyUnit;
+    private Unit enemyEngineer1;
+    private Unit enemyPolice2;
+    private Unit enemyFirefighter3;
+    private Unit enemyDoctor4;
 
     public BattleHUDScript playerHUD;
     public BattleHUDScript enemyHUD;    
@@ -67,16 +76,16 @@ public class BattleSystem : MonoBehaviour
         AssignTeams();
         InstantiateTeams();
 
-        NarratorText.text = " Your Crew is in danger! " + enemyUnit.unitName + " attacked them!";
+        NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " attacked them!";
         
-        playerHUD.SetPlayerHUD(playerUnit);
-        enemyHUD.SetEnemyHUD(enemyUnit);
+        playerHUD.SetPlayerHUD(bearUnit);
+        enemyHUD.SetEnemyHUD(enemyEngineer1);
 
         //Setup Ability Buttons for playerCharacters
         for (int i = 0; i < abilityButtons.Length; i++)
-            if (i < playerUnit.abilities.Count)
+            if (i < bearUnit.abilities.Count)
             {
-                abilityButtons[i].SetupButton(playerUnit, playerUnit.abilities[i]);
+                abilityButtons[i].SetupButton(bearUnit, bearUnit.abilities[i], this);
             }
             else
             {
@@ -122,49 +131,56 @@ public class BattleSystem : MonoBehaviour
             {
                 if (prefab == bearPrefab)
                 {
-                    playerUnit = instantiatedUnit;
-                    Debug.Log("Player unit assigned: " + playerUnit.unitName);
+                    bearUnit = instantiatedUnit;
+                    //Debug.Log("Player unit assigned1: " + bearUnit.unitName);
+                }
+                if (prefab == bunnyPrefab)
+                {
+                    bunnyUnit = instantiatedUnit;
+                }
+                if (prefab == foxPrefab)
+                {
+                    foxUnit = instantiatedUnit;
+                }
+                if (prefab == wolfPrefab)
+                {
+                    wolfUnit = instantiatedUnit;
                 }
             }
             else
             {
                 if (prefab == evilEngineerPrefab)
                 {
-                    enemyUnit = instantiatedUnit;
-                    Debug.Log("Enemy unit assigned: " + enemyUnit.unitName);
+                    enemyEngineer1 = instantiatedUnit;
+                    Debug.Log("Enemy unit assigned1: " + enemyEngineer1.unitName);
+                }
+                if (prefab == evilPolicemanPrefab)
+                {
+                    enemyPolice2 = instantiatedUnit;
+                }
+                if (prefab == evilFirefighterPrefab)
+                {
+                    enemyFirefighter3 = instantiatedUnit;
+                }
+                if (prefab == evilDoctorPrefab)
+                {
+                    enemyDoctor4 = instantiatedUnit;
                 }
             }
         }
     }
 
-    IEnumerator PlayerAttack()
-    {
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
-        enemyHUD.SetEnemySliderHP(enemyUnit.currentHp);
-        NarratorText.text = "The attack is successful " + enemyUnit.unitName + " received " + playerUnit.damage + " damage";
-        yield return new WaitForSeconds(2f);
-        if (isDead)
-        {
-            state = BattleState.WON;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-        }
-    }
-
     IEnumerator EnemyTurn()
     {
-        NarratorText.text = enemyUnit.unitName + " attacks!";
+        NarratorText.text = enemyEngineer1.unitName + " attacks!";
 
         yield return new WaitForSeconds(2f);
 
-        bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
-        NarratorText.text = "The attack is successful " + playerUnit.unitName + " received " + enemyUnit.damage + " damage";
+        bool isDead = bearUnit.TakeDamage(enemyEngineer1.damage);
+        playerHUD.SetBearHP(bearUnit);
+        NarratorText.text = "The attack is successful " + bearUnit.unitName + " received " + enemyEngineer1.damage + " damage";
 
-        //playerHUD.SetHP(playerUnit.currentHP);
+        //playerHUD.SetHP(bearUnit.currentHP);
 
         yield return new WaitForSeconds(2f);
 
@@ -195,14 +211,49 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
-        NarratorText.text = playerUnit.unitName + " turn starts now! Choose an ability!";
+        NarratorText.text = bearUnit.unitName + " turn starts now! Choose an ability!";
     }
 
-    public void onAttackButton()
+    /*public void onAttackButton()
     {
         if (state != BattleState.PLAYERTURN) return;
 
         StartCoroutine(PlayerAttack());
+    }*/
+
+    public void OnAbilityButtonClicked(BasicAbility ability)
+    {
+        selectedAbility = ability;
+        NarratorText.text = "Select a target for " + ability.name;
+    }
+
+    public void OnEnemyClicked(Unit enemyUnit)
+    {
+        if (state != BattleState.PLAYERTURN || selectedAbility == null) return;
+
+        StartCoroutine(PlayerUseAbility(enemyUnit));
+    }
+
+    IEnumerator PlayerUseAbility(Unit targetUnit)
+    {
+        selectedAbility.useAbility(targetUnit);
+        if (targetUnit == enemyEngineer1) { enemyHUD.SetEnemySliderHP(targetUnit.currentHp); }
+
+        NarratorText.text = bearUnit.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
+        selectedAbility = null;
+
+        yield return new WaitForSeconds(2f);
+
+        if (targetUnit.currentHp <= 0)
+        {
+            state = BattleState.WON;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
     }
 
 }

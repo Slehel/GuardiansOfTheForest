@@ -50,9 +50,9 @@ MonoBehaviour:
   unitLevel: 1
   UnitClass: Engineer
   CharacterPortrait: {fileID: 21300000, guid: 39228c7821e01c54c9e2f948814901d7, type: 3}
-  damage: 5
-  maxHp: 25
-  currentHp: 25
+  damage: 6
+  maxHp: 44
+  currentHp: 44
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0
