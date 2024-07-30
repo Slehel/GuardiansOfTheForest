@@ -68,10 +68,10 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.START;
 
-        StartCoroutine(SetupBattle());
+        //StartCoroutine(SetupBattle());
     }
 
-    IEnumerator SetupBattle()
+    public IEnumerator SetupBattle()
     {
         AssignTeams();
         InstantiateTeams();
@@ -80,6 +80,17 @@ public class BattleSystem : MonoBehaviour
         
         playerHUD.SetPlayerHUD(bearUnit);
         enemyHUD.SetEnemyHUD(enemyEngineer1);
+
+        //Setting Sliders for characters
+        bearUnit.SetCharacterHpSlider();
+        foxUnit.SetCharacterHpSlider();
+        wolfUnit.SetCharacterHpSlider();
+        bunnyUnit.SetCharacterHpSlider();
+        enemyEngineer1.SetCharacterHpSlider();
+        enemyPolice2.SetCharacterHpSlider();
+        enemyFirefighter3.SetCharacterHpSlider();
+        enemyDoctor4.SetCharacterHpSlider();
+
 
         //Setup Ability Buttons for playerCharacters
         for (int i = 0; i < abilityButtons.Length; i++)

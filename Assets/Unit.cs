@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     public int corruptionDamage;
     public int NatureHeal;
     public int wildness;
+    public Slider hpSlider;
 
     public string[] abilityNames = new string[4];
     public List<BasicAbility> abilities = new List<BasicAbility>();
@@ -24,8 +25,15 @@ public class Unit : MonoBehaviour
     void Start()
     {
         battleSystem = FindObjectOfType<BattleSystem>();
+
+        
     }
 
+    public void SetCharacterHpSlider()
+    {
+        hpSlider.maxValue = maxHp;
+        hpSlider.value = currentHp;
+    }
     void OnMouseDown()
     {
         if (battleSystem != null && battleSystem.state == BattleState.PLAYERTURN)
@@ -37,6 +45,7 @@ public class Unit : MonoBehaviour
     public bool TakeDamage(int damage)
     {
         currentHp -= damage;
+        hpSlider.value = currentHp;
 
         if (currentHp <= 0)
         {

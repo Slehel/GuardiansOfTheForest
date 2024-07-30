@@ -6,6 +6,7 @@ public class AbilityLoader : MonoBehaviour
 {
     public TextAsset jsonFile;
     public Unit characterAbilities;
+    public BattleSystem battleSystem;
 
     void Start()
     {
@@ -41,5 +42,13 @@ public class AbilityLoader : MonoBehaviour
         {
             Debug.LogError("JSON file not found!");
         }
+
+        if (battleSystem == null)
+        {
+            battleSystem = FindObjectOfType<BattleSystem>();
+        }
+
+        // Start the SetupBattle coroutine
+        StartCoroutine(battleSystem.SetupBattle());
     }
 }
