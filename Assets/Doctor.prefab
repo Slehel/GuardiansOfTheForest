@@ -58,6 +58,7 @@ MonoBehaviour:
   NatureHeal: 0
   wildness: 0
   hpSlider: {fileID: 2379106523065978227}
+  unitImage: {fileID: 0}
   abilityNames:
   - 
   - 

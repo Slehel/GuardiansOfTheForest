@@ -224,13 +224,6 @@ public class BattleSystem : MonoBehaviour
         NarratorText.text = bearUnit.unitName + " turn starts now! Choose an ability!";
     }
 
-    /*public void onAttackButton()
-    {
-        if (state != BattleState.PLAYERTURN) return;
-
-        StartCoroutine(PlayerAttack());
-    }*/
-
     public void OnAbilityButtonClicked(BasicAbility ability)
     {
         if (state == BattleState.PLAYERTURN)
@@ -244,6 +237,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (state != BattleState.PLAYERTURN || selectedAbility == null) return;
 
+        enemyUnit.HighlightTarget();
         StartCoroutine(PlayerUseAbility(enemyUnit));
     }
 
@@ -253,6 +247,8 @@ public class BattleSystem : MonoBehaviour
 
         NarratorText.text = bearUnit.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
         selectedAbility = null;
+
+      //  targetUnit.StopHighlighting();
 
         yield return new WaitForSeconds(2f);
 
