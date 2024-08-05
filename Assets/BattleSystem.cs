@@ -79,7 +79,6 @@ public class BattleSystem : MonoBehaviour
         NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " attacked them!";
         
         playerHUD.SetPlayerHUD(bearUnit);
-        enemyHUD.SetEnemyHUD(enemyEngineer1);
 
         //Setting Sliders for characters
         bearUnit.SetCharacterHpSlider();
@@ -234,8 +233,11 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAbilityButtonClicked(BasicAbility ability)
     {
-        selectedAbility = ability;
-        NarratorText.text = "Select a target for " + ability.name;
+        if (state == BattleState.PLAYERTURN)
+        {
+            selectedAbility = ability;
+            NarratorText.text = "Select a target for " + ability.name;
+        }
     }
 
     public void OnEnemyClicked(Unit enemyUnit)
@@ -248,7 +250,6 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerUseAbility(Unit targetUnit)
     {
         selectedAbility.useAbility(targetUnit);
-        if (targetUnit == enemyEngineer1) { enemyHUD.SetEnemySliderHP(targetUnit.currentHp); }
 
         NarratorText.text = bearUnit.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
         selectedAbility = null;

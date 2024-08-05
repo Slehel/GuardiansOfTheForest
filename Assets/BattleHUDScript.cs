@@ -10,7 +10,6 @@ public class BattleHUDScript : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI classText;
     public Slider NatureLevelSlider;
-    public Slider EnemyHpSlider;
     public Image characterPortrait;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI wildnessText;
@@ -24,22 +23,9 @@ public class BattleHUDScript : MonoBehaviour
         wildnessText.text = unit.wildness + "";
         characterPortrait.sprite = unit.CharacterPortrait;
     }
-
-    public void SetEnemyHUD(Unit unit)
-    {
-        EnemyHpSlider.maxValue = unit.maxHp;
-        EnemyHpSlider.value = unit.currentHp;
-
-
-    }
     public void SetBearHP(Unit unit)
     {
         healthText.text = unit.currentHp + "/" + unit.maxHp;
-    }
-
-    public void SetEnemySliderHP(int hp)
-    {
-        EnemyHpSlider.value = hp;
     }
 
     
