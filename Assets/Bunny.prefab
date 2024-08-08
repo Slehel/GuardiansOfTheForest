@@ -136,17 +136,21 @@ MonoBehaviour:
   UnitClass: Fighter
   CharacterPortrait: {fileID: 21300000, guid: 2de857074320e724ab34201bdd6eda85, type: 3}
   damage: 8
+  speed: 5
+  currentSpeed: 7
+  isPlayerCharacter: 1
   maxHp: 45
   currentHp: 45
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
   hpSlider: {fileID: 5885516378353191130}
+  unitSpriteRenderer: {fileID: 0}
   abilityNames:
-  - 
-  - 
-  - 
-  - 
+  - Heal
+  - Fireball
+  - Ice Blast
+  - Lightning Strike
   abilities: []
 --- !u!61 &2512644867514536238
 BoxCollider2D:

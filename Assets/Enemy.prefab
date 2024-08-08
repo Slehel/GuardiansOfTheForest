@@ -52,12 +52,15 @@ MonoBehaviour:
   UnitClass: Engineer
   CharacterPortrait: {fileID: 21300000, guid: 39228c7821e01c54c9e2f948814901d7, type: 3}
   damage: 6
+  speed: 2
+  currentSpeed: 6
   maxHp: 44
   currentHp: 44
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0
   hpSlider: {fileID: 8718092942534834796}
+  unitSpriteRenderer: {fileID: 0}
   abilityNames:
   - 
   - 

@@ -52,17 +52,21 @@ MonoBehaviour:
   UnitClass: Ranger
   CharacterPortrait: {fileID: 21300000, guid: 2de857074320e724ab34201bdd6eda85, type: 3}
   damage: 6
+  speed: 4
+  currentSpeed: 6
+  isPlayerCharacter: 1
   maxHp: 25
   currentHp: 25
   corruptionDamage: 0
   NatureHeal: 5
   wildness: 0
   hpSlider: {fileID: 5124988225471563984}
+  unitSpriteRenderer: {fileID: 0}
   abilityNames:
-  - 
-  - 
-  - 
-  - 
+  - Lightning Strike
+  - Ice Blast
+  - Heal
+  - Fireball
   abilities: []
 --- !u!61 &5479374419648308942
 BoxCollider2D:

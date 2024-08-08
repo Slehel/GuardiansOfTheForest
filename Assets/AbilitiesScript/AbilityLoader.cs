@@ -5,32 +5,30 @@ using UnityEngine;
 public class AbilityLoader : MonoBehaviour
 {
     public TextAsset jsonFile;
-    public Unit characterAbilities;
-    public BattleSystem battleSystem;
 
-    void Start()
+    public void LoadAbilities(Unit unit)
     {
         if (jsonFile != null)
         {
 
             AbilityList abilityList = JsonUtility.FromJson<AbilityList>(jsonFile.text);
-            characterAbilities.abilities.Clear();
-            foreach (string abilityName in characterAbilities.abilityNames)
+            unit.abilities.Clear();
+            foreach (string abilityName in unit.abilityNames)
             {
                 foreach (BasicAbility ability in abilityList.abilities)
                 {
                     if (ability.name == abilityName)
                     {
-                        characterAbilities.abilities.Add(ability);
+                        unit.abilities.Add(ability);
                         break;  // Exit the inner loop once a match is found
                     }
                 }
             }
 
             // Log abilities of the character to verify
-            string parentObjectName = characterAbilities.gameObject.name;
+            string parentObjectName = unit.gameObject.name;
             Debug.Log("Character Abilities for " + parentObjectName + ":");
-            foreach (var ability in characterAbilities.abilities)
+            foreach (var ability in unit.abilities)
             {
                 Debug.Log("Ability Name: " + ability.name);
                 // Debug.Log("Damage: " + ability.damage);
@@ -42,13 +40,5 @@ public class AbilityLoader : MonoBehaviour
         {
             Debug.LogError("JSON file not found!");
         }
-
-        if (battleSystem == null)
-        {
-            battleSystem = FindObjectOfType<BattleSystem>();
-        }
-
-        // Start the SetupBattle coroutine
-        StartCoroutine(battleSystem.SetupBattle());
     }
 }

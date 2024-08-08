@@ -52,12 +52,15 @@ MonoBehaviour:
   UnitClass: Policeman
   CharacterPortrait: {fileID: 21300000, guid: 39228c7821e01c54c9e2f948814901d7, type: 3}
   damage: 6
+  speed: 3
+  currentSpeed: 6
   maxHp: 37
   currentHp: 37
   corruptionDamage: 4
   NatureHeal: 0
   wildness: 0
   hpSlider: {fileID: 2285399736765890043}
+  unitSpriteRenderer: {fileID: 0}
   abilityNames:
   - 
   - 

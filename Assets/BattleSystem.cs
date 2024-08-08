@@ -24,10 +24,8 @@ public class BattleSystem : MonoBehaviour
     public Transform playerBattleStation;// Parent for player characters
     public Transform enemyBattleStation; // Parent for enemy characters
 
-    private BasicAbility selectedAbility;
-    private Unit selectedUnit;
-
-    private List<GameObject> playerTeam = new List<GameObject>();
+    public List<Unit> allUnits = new List<Unit>();
+    public List<GameObject> playerTeam = new List<GameObject>();
     private List<GameObject> enemyTeam = new List<GameObject>();
 
     private Vector3[] playerPositions = new Vector3[]
@@ -56,17 +54,27 @@ public class BattleSystem : MonoBehaviour
     private Unit enemyDoctor4;
 
     public BattleHUDScript playerHUD;
-    public BattleHUDScript enemyHUD;    
+    public BattleHUDScript enemyHUD;
+    public AbilityLoader abilityLoader;
 
 
     public TextMeshProUGUI NarratorText;
     public AbilityButton[] abilityButtons;
 
+    private BasicAbility selectedAbility;
+    private Unit selectedUnit;
     public BattleState state;
+    public int combatRound;
+    public TurnOrder turnOrder;
+    private int currentTurnIndex;
+    private Unit lastPlayerCharacter;
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
+
+        // Start the SetupBattle coroutine
+        StartCoroutine(SetupBattle());
 
         //StartCoroutine(SetupBattle());
     }
@@ -76,9 +84,29 @@ public class BattleSystem : MonoBehaviour
         AssignTeams();
         InstantiateTeams();
 
-        NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " attacked them!";
+        //Load Abilities
+        abilityLoader.LoadAbilities(bearUnit);
+        abilityLoader.LoadAbilities(foxUnit);
+        abilityLoader.LoadAbilities(wolfUnit);
+        abilityLoader.LoadAbilities(bunnyUnit);
+        Debug.Log("bunny abilities count"+ bunnyUnit.abilities.Count);
+        yield return new WaitForSeconds(2f);
+
+        NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " crew attacked them!";
+
+        // Adding all Gameobjects Unit to the allUnits list
+        foreach (var unit in playerTeam)
+        {
+            allUnits.Add(unit.GetComponent<Unit>());
+        }
+        foreach (var unit in enemyTeam)
+        {
+            allUnits.Add(unit.GetComponent<Unit>());
+        }
+
+        turnOrder.MakeTurnOrder(allUnits.ToArray());
+
         
-        playerHUD.SetPlayerHUD(bearUnit);
 
         //Setting Sliders for characters
         bearUnit.SetCharacterHpSlider();
@@ -90,7 +118,12 @@ public class BattleSystem : MonoBehaviour
         enemyFirefighter3.SetCharacterHpSlider();
         enemyDoctor4.SetCharacterHpSlider();
 
+        
 
+        
+
+        //Setup HUD and Player buttons
+       /* playerHUD.SetPlayerHUD(bearUnit);
         //Setup Ability Buttons for playerCharacters
         for (int i = 0; i < abilityButtons.Length; i++)
             if (i < bearUnit.abilities.Count)
@@ -100,11 +133,31 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character.");
-            }
+            }*/
         yield return new WaitForSeconds(2f);
 
-        state = BattleState.PLAYERTURN;
-        PlayerTurn();
+        //Start the Combat Rounds
+        CombatTurn();
+    }
+
+    void SetupBattleUI(Unit unit)
+    {
+        Debug.Log("SETUP UI");
+        //unit.LogUnitInfo();
+        //Setup HUD and Player buttons
+        playerHUD.SetPlayerHUD(unit);
+        abilityLoader.LoadAbilities(unit);// NA SZOVAL AMIG A TEAMEKET NEM RENDEZTED EL RENDESEN, addig kell ez a loadabilities minden ui betolteskor, mert valszeg elcsuszik a prefab meg a unitokkal
+        //Debug.Log(unit.abilities[1]); nincs meg az abilities
+        //Setup Ability Buttons for playerCharacters
+        for (int i = 0; i < abilityButtons.Length; i++)
+            if (i < unit.abilities.Count)
+            {
+                abilityButtons[i].SetupButton(unit, unit.abilities[i], this);
+            }
+            else
+            {
+                Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character." + "unit abilities count is" + unit.abilities.Count + "  ");
+            }
     }
 
     void AssignTeams()
@@ -162,7 +215,7 @@ public class BattleSystem : MonoBehaviour
                 if (prefab == evilEngineerPrefab)
                 {
                     enemyEngineer1 = instantiatedUnit;
-                    Debug.Log("Enemy unit assigned1: " + enemyEngineer1.unitName);
+                    //Debug.Log("Enemy unit assigned1: " + enemyEngineer1.unitName);
                 }
                 if (prefab == evilPolicemanPrefab)
                 {
@@ -180,15 +233,14 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyTurn()
+    IEnumerator EnemyTurn(Unit enemyUnit)
     {
-        NarratorText.text = enemyEngineer1.unitName + " attacks!";
-
+        NarratorText.text = enemyUnit.unitName + " attacks!";
         yield return new WaitForSeconds(2f);
 
-        bool isDead = bearUnit.TakeDamage(enemyEngineer1.damage);
+        bool isDead = bearUnit.TakeDamage(enemyUnit.damage);
         playerHUD.SetBearHP(bearUnit);
-        NarratorText.text = "The attack is successful " + bearUnit.unitName + " received " + enemyEngineer1.damage + " damage";
+        NarratorText.text = "The attack is successful " + bearUnit.unitName + " received " + enemyUnit.damage + " damage";
 
         //playerHUD.SetHP(bearUnit.currentHP);
 
@@ -201,27 +253,42 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
+            currentTurnIndex++;
+            if (currentTurnIndex >= allUnits.Count)
+            {
+                StartNewRound();
+            }
+            else
+            {
+                CombatTurn();
+            }
+        }
+    }
+
+    void StartNewRound()
+    {
+        turnOrder.ResetSpeeds();
+        turnOrder.RollForTurnOrder();
+        currentTurnIndex = 0;
+        CombatTurn();
+    }
+
+    void CombatTurn()
+    {
+        Unit currentUnit = turnOrder.GetNextUnit(currentTurnIndex);
+        //currentUnit.LogUnitInfo();
+        if (currentUnit.isPlayerCharacter)
+        {
             state = BattleState.PLAYERTURN;
-            PlayerTurn();
+            lastPlayerCharacter= currentUnit;
+            SetupBattleUI(currentUnit);
+            NarratorText.text = currentUnit.unitName + " turn starts now! Choose an ability!";
         }
-
-    }
-
-    void EndBattle()
-    {
-        if (state == BattleState.WON)
+        else
         {
-            NarratorText.text = "You won the battle!";
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn(currentUnit));
         }
-        else if (state == BattleState.LOST)
-        {
-            NarratorText.text = "You were defeated.";
-        }
-    }
-
-    void PlayerTurn()
-    {
-        NarratorText.text = bearUnit.unitName + " turn starts now! Choose an ability!";
     }
 
     public void OnAbilityButtonClicked(BasicAbility ability)
@@ -245,12 +312,12 @@ public class BattleSystem : MonoBehaviour
     {
         selectedAbility.useAbility(targetUnit);
 
-        NarratorText.text = bearUnit.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
+        NarratorText.text = lastPlayerCharacter.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
         selectedAbility = null;
 
       //  targetUnit.StopHighlighting();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         if (targetUnit.currentHp <= 0)
         {
@@ -259,9 +326,27 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
+            currentTurnIndex++;
+            if (currentTurnIndex >= allUnits.Count)
+            {
+                StartNewRound();
+            }
+            else
+            {
+                CombatTurn();
+            }
         }
     }
 
+    void EndBattle()
+    {
+        if (state == BattleState.WON)
+        {
+            NarratorText.text = "You won the battle!";
+        }
+        else if (state == BattleState.LOST)
+        {
+            NarratorText.text = "You were defeated.";
+        }
+    }
 }

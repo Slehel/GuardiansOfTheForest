@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class Unit : MonoBehaviour
     public string UnitClass;
     public Sprite CharacterPortrait;
     public int damage;
+    public int speed;
+    public int currentSpeed;
+    public Boolean isPlayerCharacter;
     public int maxHp;
     public int currentHp;
     public int corruptionDamage;
@@ -23,7 +27,7 @@ public class Unit : MonoBehaviour
     public List<BasicAbility> abilities = new List<BasicAbility>();
 
     private BattleSystem battleSystem;
-    
+
 
     void Start()
     {
@@ -31,7 +35,7 @@ public class Unit : MonoBehaviour
         unitSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
     }
-    
+
     public void SetCharacterHpSlider()
     {
         hpSlider.maxValue = maxHp;
@@ -54,8 +58,8 @@ public class Unit : MonoBehaviour
             return true;
         }
         else
-        { 
-            return false; 
+        {
+            return false;
         }
     }
 
@@ -88,5 +92,28 @@ public class Unit : MonoBehaviour
         highlightCoroutine = null;
     }
 
+    public void LogUnitInfo()
+    {
+        string unitInfo = $"Unit Name: {unitName}\n" +
+                          $"Unit Level: {unitLevel}\n" +
+                          $"Unit Class: {UnitClass}\n" +
+                          $"Damage: {damage}\n" +
+                          $"Speed: {speed}\n" +
+                          $"Current Speed: {currentSpeed}\n" +
+                          $"Is Player Character: {isPlayerCharacter}\n" +
+                          $"Max HP: {maxHp}\n" +
+                          $"Current HP: {currentHp}\n" +
+                          $"Corruption Damage: {corruptionDamage}\n" +
+                          $"Nature Heal: {NatureHeal}\n" +
+                          $"Wildness: {wildness}\n" +
+                          $"HP Slider Value: {(hpSlider != null ? hpSlider.value.ToString() : "None")}\n" +
+                          $"Character Portrait: {(CharacterPortrait != null ? CharacterPortrait.name : "None")}\n" +
+                          $"Sprite Renderer: {(unitSpriteRenderer != null ? unitSpriteRenderer.sprite.name : "None")}\n" +
+                          $"Abilities: {string.Join(", ", abilityNames)}\n" +
+                          $"Ability Details: {string.Join(", ", abilities.ConvertAll(ability => ability.name))}";
+
+        Debug.Log(unitInfo);
+    }
 }
+
 
