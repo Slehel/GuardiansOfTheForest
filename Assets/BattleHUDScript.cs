@@ -28,5 +28,10 @@ public class BattleHUDScript : MonoBehaviour
         healthText.text = unit.currentHp + "/" + unit.maxHp;
     }
 
+    public void SetHP(Unit unit)
+    {
+        healthText.text = unit.currentHp + "/" + unit.maxHp;
+    }
+
     
 }

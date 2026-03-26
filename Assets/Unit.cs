@@ -27,14 +27,37 @@ public class Unit : MonoBehaviour
     public string[] abilityNames = new string[4];
     public List<BasicAbility> abilities = new List<BasicAbility>();
 
-    private BattleSystem battleSystem;
+    // Ability states
+    public bool isDefending = false;    // Halves next incoming hit
+    public bool isCountering = false;   // Counterattacks after being hit while defending
+    public int counterDamage = 0;       // How much the counter hits back for
+    public bool isBleeding = false;     // Takes bleed damage at start of turn
+    public int bleedDamage = 0;         // Damage per bleed tick
+    public int bleedDuration = 0;       // Turns of bleed remaining
+    public float damageMultiplier = 1f; // Multiplied against outgoing damage (Fear The Rage reduces this)
+    public Unit protectedUnit = null;   // If set, attacks on protectedUnit redirect to this unit
 
+    private BattleSystem battleSystem;
 
     void Start()
     {
         battleSystem = FindObjectOfType<BattleSystem>();
         unitSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
+    void OnMouseEnter()
+    {
+        battleSystem?.ShowTooltip(unitName + "  |  " + Mathf.Max(0, currentHp) + " / " + maxHp + " HP");
+    }
+
+    void OnMouseExit()
+    {
+        battleSystem?.HideTooltip();
+    }
+
+    void UpdateHoverLabel()
+    {
+        // Refresh tooltip if currently hovering this unit
     }
 
     public void SetCharacterHpSlider()
@@ -42,6 +65,7 @@ public class Unit : MonoBehaviour
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
     }
+
     void OnMouseDown()
     {
         if (battleSystem != null && battleSystem.state == BattleState.PLAYERTURN)
@@ -50,36 +74,63 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public bool TakeDamage(int damage)
+    // Returns true if the unit died. attacker is needed for counterattack.
+    public bool TakeDamage(int incomingDamage, Unit attacker = null)
     {
-        currentHp -= damage;
+        // Apply defend: halve damage and clear defend state
+        if (isDefending)
+        {
+            incomingDamage = incomingDamage / 2;
+            isDefending = false;
+
+            // Counter: hit the attacker back
+            if (isCountering && attacker != null)
+            {
+                attacker.TakeDamage(counterDamage);
+                isCountering = false;
+            }
+        }
+
+        currentHp -= incomingDamage;
         hpSlider.value = currentHp;
-        if (currentHp <= 0)
+        UpdateHoverLabel();
+        return currentHp <= 0;
+    }
+
+    // Called at the start of this unit's turn to tick bleed damage
+    public bool ProcessBleed()
+    {
+        if (!isBleeding) return false;
+
+        currentHp -= bleedDamage;
+        hpSlider.value = currentHp;
+        UpdateHoverLabel();
+        bleedDuration--;
+
+        if (bleedDuration <= 0)
         {
-            return true;
+            isBleeding = false;
+            bleedDamage = 0;
+            bleedDuration = 0;
         }
-        else
-        {
-            return false;
-        }
+
+        return currentHp <= 0;
     }
 
     public void HighlightTarget()
     {
         if (highlightCoroutine != null)
-        {
             StopCoroutine(highlightCoroutine);
-        }
         highlightCoroutine = StartCoroutine(TargetHighlightCoroutine());
     }
 
-    public void StopHighlighting()//felesleges egyelore
+    public void StopHighlighting()
     {
         if (highlightCoroutine != null)
         {
             StopCoroutine(highlightCoroutine);
             highlightCoroutine = null;
-            unitSpriteRenderer.color = Color.white; // Reset to original color
+            unitSpriteRenderer.color = Color.white;
         }
     }
 
@@ -87,8 +138,7 @@ public class Unit : MonoBehaviour
     {
         Color originalColor = unitSpriteRenderer.color;
         unitSpriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(2f); // Highlight duration
-
+        yield return new WaitForSeconds(2f);
         unitSpriteRenderer.color = originalColor;
         highlightCoroutine = null;
     }
@@ -108,13 +158,8 @@ public class Unit : MonoBehaviour
                           $"Nature Heal: {natureHeal}\n" +
                           $"Wildness: {wildness}\n" +
                           $"HP Slider Value: {(hpSlider != null ? hpSlider.value.ToString() : "None")}\n" +
-                          $"Character Portrait: {(CharacterPortrait != null ? CharacterPortrait.name : "None")}\n" +
-                          $"Sprite Renderer: {(unitSpriteRenderer != null ? unitSpriteRenderer.sprite.name : "None")}\n" +
                           $"Abilities: {string.Join(", ", abilityNames)}\n" +
-                          $"Ability Details: {string.Join(", ", abilities.ConvertAll(ability => ability.name))}";
-
+                          $"Ability Details: {string.Join(", ", abilities.ConvertAll(a => a.name))}";
         Debug.Log(unitInfo);
     }
 }
-
-

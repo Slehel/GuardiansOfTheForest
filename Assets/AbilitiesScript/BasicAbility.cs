@@ -15,29 +15,17 @@ public class BasicAbility
     public int poisonChance = 0;
     public int poisonDamage = 0;
     public int natureEffect = 0;
-    // ezeket az abilit json fileba ki kell tolteni!!!!!!!!!!!!!!!!!!!!!!
+
+    // If false, ability fires immediately on the caster (no enemy click needed)
+    public bool requiresTarget = true;
+
+    // The actual ability logic — assigned in AbilityLoader.SetupAbilities()
+    [System.NonSerialized]
+    public System.Action<Unit> effect;
+
     public void useAbility(Unit target)
     {
-       if(name == "Fireball")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
-        if (name == "Ice Blast")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
-        if (name == "Lightning Strike")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
-        if (name == "Heal")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
+        effect?.Invoke(target);
     }
 }
 
@@ -46,6 +34,3 @@ public class AbilityList
 {
     public BasicAbility[] abilities;
 }
-
-
-
