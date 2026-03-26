@@ -822,8 +822,11 @@ MonoBehaviour:
   evilDoctorPrefab: {fileID: 5913894387049678757, guid: 724cbd795fa176440a38d0427799978e, type: 3}
   playerBattleStation: {fileID: 654380618}
   enemyBattleStation: {fileID: 1642112345}
+  allUnits: []
+  playerTeam: []
   playerHUD: {fileID: 1198768}
   enemyHUD: {fileID: 1198768}
+  abilityLoader: {fileID: 1983011891}
   NarratorText: {fileID: 179133269}
   abilityButtons:
   - {fileID: 1937454282}
@@ -831,6 +834,8 @@ MonoBehaviour:
   - {fileID: 269707579}
   - {fileID: 1936362479}
   state: 0
+  combatRound: 0
+  turnOrder: {fileID: 1336354963}
 --- !u!4 &321255693
 Transform:
   m_ObjectHideFlags: 0
@@ -1956,6 +1961,50 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162749653}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1336354962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1336354964}
+  - component: {fileID: 1336354963}
+  m_Layer: 0
+  m_Name: TurnOrder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1336354963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336354962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df84629304b23764cb6c695d3216da21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1336354964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336354962}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -3219,8 +3268,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonFile: {fileID: 4900000, guid: 33e78f33b5681cb41b42434898cad0d5, type: 3}
-  characterAbilities: {fileID: 4486108521627501022, guid: eed0948397fd2cc45bf1ea8a15549c14, type: 3}
-  battleSystem: {fileID: 321255692}
 --- !u!4 &1983011892
 Transform:
   m_ObjectHideFlags: 0
@@ -3383,3 +3430,4 @@ SceneRoots:
   - {fileID: 654380618}
   - {fileID: 1642112345}
   - {fileID: 1983011892}
+  - {fileID: 1336354964}

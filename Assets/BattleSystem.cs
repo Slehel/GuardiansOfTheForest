@@ -85,6 +85,8 @@ public class BattleSystem : MonoBehaviour
         InstantiateTeams();
 
         //Load Abilities
+        if (abilityLoader == null)
+            Debug.LogError("AbilityLoader is not assigned!");
         abilityLoader.LoadAbilities(bearUnit);
         abilityLoader.LoadAbilities(foxUnit);
         abilityLoader.LoadAbilities(wolfUnit);
@@ -195,19 +197,22 @@ public class BattleSystem : MonoBehaviour
                 if (prefab == bearPrefab)
                 {
                     bearUnit = instantiatedUnit;
-                    //Debug.Log("Player unit assigned1: " + bearUnit.unitName);
+                    Debug.Log("Player unit assigned1: " + bearUnit.unitName);
                 }
                 if (prefab == bunnyPrefab)
                 {
                     bunnyUnit = instantiatedUnit;
+                    Debug.Log("Player unit assigned1: " + bunnyUnit.unitName);
                 }
                 if (prefab == foxPrefab)
                 {
                     foxUnit = instantiatedUnit;
+                    Debug.Log("Player unit assigned1: " + foxUnit.unitName);
                 }
                 if (prefab == wolfPrefab)
                 {
                     wolfUnit = instantiatedUnit;
+                    Debug.Log("Player unit assigned1: " + wolfUnit.unitName);
                 }
             }
             else

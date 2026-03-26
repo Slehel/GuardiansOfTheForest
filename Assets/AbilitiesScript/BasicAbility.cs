@@ -9,7 +9,13 @@ public class BasicAbility
     public int damage;
     public float cooldown;
     public float range;
-
+    public int stunChance = 0;
+    public int bleedChance = 0;
+    public int bleedDamage = 0;
+    public int poisonChance = 0;
+    public int poisonDamage = 0;
+    public int natureEffect = 0;
+    // ezeket az abilit json fileba ki kell tolteni!!!!!!!!!!!!!!!!!!!!!!
     public void useAbility(Unit target)
     {
        if(name == "Fireball")

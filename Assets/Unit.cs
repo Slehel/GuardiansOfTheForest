@@ -17,8 +17,9 @@ public class Unit : MonoBehaviour
     public int maxHp;
     public int currentHp;
     public int corruptionDamage;
-    public int NatureHeal;
+    public int natureHeal;
     public int wildness;
+    public int isStunned;
     public Slider hpSlider;
     public SpriteRenderer unitSpriteRenderer;
     private Coroutine highlightCoroutine;
@@ -104,7 +105,7 @@ public class Unit : MonoBehaviour
                           $"Max HP: {maxHp}\n" +
                           $"Current HP: {currentHp}\n" +
                           $"Corruption Damage: {corruptionDamage}\n" +
-                          $"Nature Heal: {NatureHeal}\n" +
+                          $"Nature Heal: {natureHeal}\n" +
                           $"Wildness: {wildness}\n" +
                           $"HP Slider Value: {(hpSlider != null ? hpSlider.value.ToString() : "None")}\n" +
                           $"Character Portrait: {(CharacterPortrait != null ? CharacterPortrait.name : "None")}\n" +
