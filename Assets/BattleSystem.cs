@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -347,8 +348,33 @@ public class BattleSystem : MonoBehaviour
     void EndBattle()
     {
         if (state == BattleState.WON)
+        {
             NarratorText.text = "You won the battle!";
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.LastBattleWon = true;
+                GameManager.Instance.MarkCurrentRoomCleared();
+            }
+        }
         else if (state == BattleState.LOST)
-            NarratorText.text = "You were defeated.";
+        {
+            NarratorText.text = "You were defeated...";
+            if (GameManager.Instance != null)
+                GameManager.Instance.LastBattleWon = false;
+        }
+
+        StartCoroutine(ReturnToDungeon());
+    }
+
+    IEnumerator ReturnToDungeon()
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.SavePartyHp(allUnits);
+
+        // Return to dungeon map if it exists, otherwise stay (standalone battle test)
+        if (GameManager.Instance != null && GameManager.Instance.HasDungeon())
+            SceneManager.LoadScene("DungeonScene");
     }
 }
