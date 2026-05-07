@@ -30,7 +30,7 @@ public class TurnOrder : MonoBehaviour
         foreach (var unit in combatUnits)
         {
             int rolledValue = random.Next(1, 9); // Rolling a d8 (values 1 to 8)
-            unit.currentSpeed = unit.speed + rolledValue; // Add rolled value to original speed
+            unit.currentSpeed = unit.TotalSpeed + rolledValue;
         }
 
         // Sort units by currentSpeed in ascending order
@@ -41,7 +41,7 @@ public class TurnOrder : MonoBehaviour
     {
         foreach (var unit in combatUnits)
         {
-            unit.currentSpeed = unit.speed; // Reset to the original speed
+            unit.currentSpeed = unit.TotalSpeed;
         }
     }
 }

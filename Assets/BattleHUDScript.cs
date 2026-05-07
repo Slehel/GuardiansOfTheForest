@@ -19,13 +19,13 @@ public class BattleHUDScript : MonoBehaviour
         nameText.text = unit.unitName;
         classText.text = unit.UnitClass;
         NatureLevelSlider.maxValue = 100;
-        healthText.text = unit.currentHp + "/" + unit.maxHp;
+        healthText.text = unit.currentHp + "/" + unit.TotalMaxHp;
         wildnessText.text = unit.wildness + "";
         characterPortrait.sprite = unit.CharacterPortrait;
     }
     public void SetHP(Unit unit)
     {
-        healthText.text = unit.currentHp + "/" + unit.maxHp;
+        healthText.text = unit.currentHp + "/" + unit.TotalMaxHp;
     }
 
     

@@ -28,8 +28,10 @@ public class BasicAbility
         }
         else
         {
-            bool killed = target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
+            int effectiveDamage = Mathf.Max(1, damage - target.TotalDefense);
+            bool killed = target.TakeDamage(effectiveDamage);
+            Debug.Log(name + " deals " + effectiveDamage + " damage to " + target.unitName +
+                      (target.TotalDefense > 0 ? $" ({target.TotalDefense} absorbed)" : ""));
 
             if (!killed && stunChance > 0 && Random.Range(0, 100) < stunChance)
             {

@@ -206,10 +206,14 @@ public class BattleSystem : MonoBehaviour
         }
 
         Unit target = livingPlayers[UnityEngine.Random.Range(0, livingPlayers.Count)];
-        bool isDead = target.TakeDamage(enemyUnit.damage);
+        int rawDamage = enemyUnit.damage;
+        int effectiveDamage = Mathf.Max(1, rawDamage - target.TotalDefense);
+        bool isDead = target.TakeDamage(effectiveDamage);
 
         playerHUD.SetHP(target);
-        NarratorText.text = enemyUnit.unitName + " attacks " + target.unitName + " for " + enemyUnit.damage + " damage!";
+        string blockText = target.TotalDefense > 0 ? $" ({target.TotalDefense} blocked)" : "";
+        NarratorText.text = enemyUnit.unitName + " attacks " + target.unitName +
+                            " for " + effectiveDamage + " damage!" + blockText;
 
         yield return new WaitForSeconds(2f);
 

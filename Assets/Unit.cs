@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     public string UnitClass;
     public Sprite CharacterPortrait;
     public int damage;
+    public int defense;
     public int speed;
     public int currentSpeed;
     public Boolean isPlayerCharacter;
@@ -39,7 +40,7 @@ public class Unit : MonoBehaviour
 
     public void SetCharacterHpSlider()
     {
-        hpSlider.maxValue = maxHp;
+        hpSlider.maxValue = TotalMaxHp;
         hpSlider.value = currentHp;
     }
     void OnMouseDown()
@@ -49,6 +50,13 @@ public class Unit : MonoBehaviour
             battleSystem.OnEnemyClicked(this);
         }
     }
+
+    private HeroInventory Inventory => GetComponent<HeroInventory>();
+
+    public int TotalDamage  => damage  + (Inventory != null ? Inventory.GetBonusDamage()  : 0);
+    public int TotalDefense => defense + (Inventory != null ? Inventory.GetBonusDefense() : 0);
+    public int TotalSpeed   => Mathf.Max(1, speed + (Inventory != null ? Inventory.GetBonusSpeed()  : 0));
+    public int TotalMaxHp   => maxHp   + (Inventory != null ? Inventory.GetBonusMaxHp()   : 0);
 
     public bool IsDead => currentHp <= 0;
 
@@ -61,7 +69,7 @@ public class Unit : MonoBehaviour
 
     public void Heal(int amount)
     {
-        currentHp = Mathf.Min(currentHp + amount, maxHp);
+        currentHp = Mathf.Min(currentHp + amount, TotalMaxHp);
         hpSlider.value = currentHp;
     }
 

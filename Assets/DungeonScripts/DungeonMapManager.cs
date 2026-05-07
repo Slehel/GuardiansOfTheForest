@@ -16,6 +16,10 @@ public class DungeonMapManager : MonoBehaviour
     public TextMeshProUGUI eventPanelText;
     public Button eventConfirmButton;
 
+    [Header("Inventory")]
+    public InventoryUIManager inventoryUIManager;
+    public Button openInventoryButton;
+
     [Header("Scene Names")]
     public string battleSceneName = "FightSceneTest";
 
@@ -51,6 +55,9 @@ public class DungeonMapManager : MonoBehaviour
             ShowNarrator("The dungeon awaits. Choose a room.");
 
         eventPanel.SetActive(false);
+
+        if (openInventoryButton != null && inventoryUIManager != null)
+            openInventoryButton.onClick.AddListener(() => inventoryUIManager.OpenInventory());
     }
 
     // ─────────────────────────────────────────────
@@ -245,10 +252,23 @@ public class DungeonMapManager : MonoBehaviour
             case RoomType.Treasure:
                 if (!room.isCleared)
                 {
+                    room.isCleared = true;
                     int gold = Random.Range(15, 40);
                     GameManager.Instance.Gold += gold;
-                    room.isCleared = true;
-                    ShowNarrator($"You found a treasure chest! +{gold} Gold. (Total: {GameManager.Instance.Gold})");
+
+                    string droppedId = RollTreasureItem();
+                    if (droppedId != null)
+                    {
+                        PartyStash.AddItem(droppedId);
+                        var dropped = ItemDatabase.Instance?.Get(droppedId);
+                        ShowNarrator($"Treasure chest! +{gold} Gold and you found: {dropped?.displayName}!");
+                    }
+                    else
+                    {
+                        ShowNarrator($"You found a treasure chest! +{gold} Gold. (Total: {GameManager.Instance.Gold})");
+                    }
+
+                    inventoryUIManager?.OpenInventory();
                 }
                 else
                 {
@@ -261,7 +281,8 @@ public class DungeonMapManager : MonoBehaviour
                 {
                     room.isCleared = true;
                     HealPartyAtRest();
-                    ShowNarrator("The party rests by the campfire. HP restored.");
+                    ShowNarrator("The party rests by the campfire. HP restored. Take this moment to prepare your equipment.");
+                    inventoryUIManager?.OpenInventory();
                 }
                 else
                 {
@@ -304,12 +325,41 @@ public class DungeonMapManager : MonoBehaviour
             room.isCleared = true;
             int gold = Random.Range(20, 50);
             GameManager.Instance.Gold += gold;
-            ShowNarrator($"Quest complete! The object revealed its secret. +{gold} Gold.");
+
+            string rewardId = RollQuestRewardItem();
+            if (rewardId != null)
+            {
+                PartyStash.AddItem(rewardId);
+                var reward = ItemDatabase.Instance?.Get(rewardId);
+                ShowNarrator($"Quest complete! +{gold} Gold and you earned: {reward?.displayName}!");
+            }
+            else
+            {
+                ShowNarrator($"Quest complete! The object revealed its secret. +{gold} Gold.");
+            }
+
+            inventoryUIManager?.OpenInventory();
         }
         else
         {
             ShowNarrator("You've already solved this room's mystery.");
         }
+    }
+
+    private string RollTreasureItem()
+    {
+        if (ItemDatabase.Instance == null) return null;
+        var candidates = ItemDatabase.Instance.GetUniversalItems();
+        if (candidates.Count == 0) return null;
+        return candidates[Random.Range(0, candidates.Count)].id;
+    }
+
+    private string RollQuestRewardItem()
+    {
+        if (ItemDatabase.Instance == null) return null;
+        var candidates = ItemDatabase.Instance.GetClassSpecificItems();
+        if (candidates.Count == 0) return null;
+        return candidates[Random.Range(0, candidates.Count)].id;
     }
 
     // ─────────────────────────────────────────────

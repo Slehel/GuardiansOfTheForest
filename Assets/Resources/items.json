@@ -1,0 +1,136 @@
+{
+  "items": [
+    {
+      "id": "sword_iron",
+      "displayName": "Iron Sword",
+      "description": "A reliable blade forged by the village blacksmith.",
+      "itemType": 0,
+      "requiredClass": "",
+      "bonusDamage": 3,
+      "bonusDefense": 0,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "sword_silver",
+      "displayName": "Silver Sword",
+      "description": "Blessed metal. Deals more damage to corrupted foes.",
+      "itemType": 0,
+      "requiredClass": "",
+      "bonusDamage": 5,
+      "bonusDefense": 0,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "helmet_leather",
+      "displayName": "Leather Cap",
+      "description": "Light protection for the head.",
+      "itemType": 1,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 2,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "helmet_iron",
+      "displayName": "Iron Helm",
+      "description": "Heavy but sturdy. Slows you down a little.",
+      "itemType": 1,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 4,
+      "bonusSpeed": -1,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "armor_leather",
+      "displayName": "Leather Vest",
+      "description": "Flexible hide armor. Decent protection, minimal encumbrance.",
+      "itemType": 2,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 3,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "armor_chainmail",
+      "displayName": "Chainmail Coat",
+      "description": "Interlocked rings protect against slashing blows.",
+      "itemType": 2,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 5,
+      "bonusSpeed": -1,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "ring_swiftness",
+      "displayName": "Ring of Swiftness",
+      "description": "The stone pulses with wind magic. The wearer feels lighter.",
+      "itemType": 3,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 0,
+      "bonusSpeed": 2,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "amulet_vitality",
+      "displayName": "Amulet of Vitality",
+      "description": "Ancient forest magic flows through this charm, bolstering life force.",
+      "itemType": 3,
+      "requiredClass": "",
+      "bonusDamage": 0,
+      "bonusDefense": 0,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 8
+    },
+    {
+      "id": "shield_oaken",
+      "displayName": "Oaken Shield",
+      "description": "A Paladin's stalwart companion. Crafted from ancient heartwood.",
+      "itemType": 4,
+      "requiredClass": "Paladin",
+      "bonusDamage": 0,
+      "bonusDefense": 6,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "quiver_hunters",
+      "displayName": "Hunter's Quiver",
+      "description": "Aerodynamic arrows fletched from owl feathers. Fast and true.",
+      "itemType": 5,
+      "requiredClass": "Ranger",
+      "bonusDamage": 3,
+      "bonusDefense": 0,
+      "bonusSpeed": 1,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "offhand_buckler",
+      "displayName": "Steel Buckler",
+      "description": "A small off-hand shield for fighters. Parry without sacrificing offense.",
+      "itemType": 6,
+      "requiredClass": "Fighter",
+      "bonusDamage": 1,
+      "bonusDefense": 2,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    },
+    {
+      "id": "offhand_dagger",
+      "displayName": "Shadow Dagger",
+      "description": "A rogue's second fang. Strike twice before they can react.",
+      "itemType": 6,
+      "requiredClass": "Rogue",
+      "bonusDamage": 4,
+      "bonusDefense": 0,
+      "bonusSpeed": 0,
+      "bonusMaxHp": 0
+    }
+  ]
+}

@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour
     // Party HP persisted across scene loads (unitName → currentHp)
     public Dictionary<string, int> PartyCurrentHp { get; private set; } = new Dictionary<string, int>();
 
+    // Inventory: shared item stash (list of item IDs)
+    public List<string> PartyStash { get; private set; } = new List<string>();
+
+    // Per-hero equipment (unitName → equipped slots)
+    private Dictionary<string, EquippedItems> partyEquipment = new Dictionary<string, EquippedItems>();
+
     void Awake()
     {
         if (Instance != null)
@@ -34,6 +40,8 @@ public class GameManager : MonoBehaviour
         CurrentRoomId = 0;
         Gold = 0;
         PartyCurrentHp.Clear();
+        PartyStash.Clear();
+        partyEquipment.Clear();
         LastBattleWon = false;
         IsBossBattle = false;
     }
@@ -74,4 +82,19 @@ public class GameManager : MonoBehaviour
     }
 
     public bool HasDungeon() => Dungeon != null && Dungeon.Count > 0;
+
+    // ─── Equipment ───────────────────────────────────────────────────────────
+
+    public EquippedItems GetEquippedItems(string heroName)
+    {
+        if (!partyEquipment.TryGetValue(heroName, out var eq))
+        {
+            eq = new EquippedItems();
+            partyEquipment[heroName] = eq;
+        }
+        return eq;
+    }
+
+    public void SetEquippedItem(string heroName, SlotType slot, string itemId)
+        => GetEquippedItems(heroName).SetSlot(slot, itemId);
 }
