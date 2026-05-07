@@ -9,35 +9,42 @@ public class BasicAbility
     public int damage;
     public float cooldown;
     public float range;
-    public int stunChance = 0;
-    public int bleedChance = 0;
-    public int bleedDamage = 0;
-    public int poisonChance = 0;
-    public int poisonDamage = 0;
-    public int natureEffect = 0;
-    // ezeket az abilit json fileba ki kell tolteni!!!!!!!!!!!!!!!!!!!!!!
-    public void useAbility(Unit target)
+    public bool isHeal;
+    public int stunChance;
+    public int bleedChance;
+    public int bleedDamage;
+    public int poisonChance;
+    public int poisonDamage;
+    public int natureEffect;
+
+    public int currentCooldown;
+
+    public void UseAbility(Unit target)
     {
-       if(name == "Fireball")
+        if (isHeal)
         {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
+            target.Heal(damage);
+            Debug.Log(name + " heals " + target.unitName + " for " + damage);
         }
-        if (name == "Ice Blast")
+        else
         {
-            target.TakeDamage(damage);
+            bool killed = target.TakeDamage(damage);
             Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
+
+            if (!killed && stunChance > 0 && Random.Range(0, 100) < stunChance)
+            {
+                target.isStunned = 1;
+                Debug.Log(target.unitName + " is stunned!");
+            }
         }
-        if (name == "Lightning Strike")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
-        if (name == "Heal")
-        {
-            target.TakeDamage(damage);
-            Debug.Log(name + " deals " + damage + " damage to " + target.unitName);
-        }
+        currentCooldown = (int)cooldown;
+    }
+
+    public bool IsOnCooldown() => currentCooldown > 0;
+
+    public void TickCooldown()
+    {
+        if (currentCooldown > 0) currentCooldown--;
     }
 }
 
@@ -46,6 +53,3 @@ public class AbilityList
 {
     public BasicAbility[] abilities;
 }
-
-
-

@@ -23,7 +23,7 @@ public class BattleHUDScript : MonoBehaviour
         wildnessText.text = unit.wildness + "";
         characterPortrait.sprite = unit.CharacterPortrait;
     }
-    public void SetBearHP(Unit unit)
+    public void SetHP(Unit unit)
     {
         healthText.text = unit.currentHp + "/" + unit.maxHp;
     }

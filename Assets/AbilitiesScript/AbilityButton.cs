@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,17 +16,18 @@ public class AbilityButton : MonoBehaviour
 
         if (button != null && buttonText != null)
         {
-            // Set the button text to the ability name
-            buttonText.text = ability.name;
+            button.onClick.RemoveAllListeners();
 
-            // Add a listener to the button click event
+            bool onCooldown = ability.IsOnCooldown();
+            button.interactable = !onCooldown;
+            buttonText.text = onCooldown
+                ? ability.name + " (" + ability.currentCooldown + ")"
+                : ability.name;
+
             button.onClick.AddListener(() =>
             {
                 if (unit != null)
-                {
-                    //basicAbility.useAbility(ability); ez a regi 
                     battleSystem.OnAbilityButtonClicked(basicAbility);
-                }
             });
         }
         else

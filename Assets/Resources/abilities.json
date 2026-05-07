@@ -3,26 +3,31 @@
         {
             "name": "Fireball",
             "damage": 11,
-            "cooldown": 5,
-            "range": 10
+            "cooldown": 3,
+            "range": 10,
+            "poisonChance": 25,
+            "poisonDamage": 3
         },
         {
             "name": "Ice Blast",
             "damage": 6,
-            "cooldown": 7,
-            "range": 8
+            "cooldown": 2,
+            "range": 8,
+            "stunChance": 30
         },
         {
             "name": "Lightning Strike",
             "damage": 8,
-            "cooldown": 6,
-            "range": 9
+            "cooldown": 2,
+            "range": 9,
+            "stunChance": 15
         },
         {
             "name": "Heal",
-            "damage": 5,
+            "damage": 15,
             "cooldown": 3,
-            "range": 5
+            "range": 5,
+            "isHeal": true
         }
     ]
 }

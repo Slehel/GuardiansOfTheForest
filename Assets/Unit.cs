@@ -50,18 +50,19 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public bool IsDead => currentHp <= 0;
+
     public bool TakeDamage(int damage)
     {
         currentHp -= damage;
         hpSlider.value = currentHp;
-        if (currentHp <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return currentHp <= 0;
+    }
+
+    public void Heal(int amount)
+    {
+        currentHp = Mathf.Min(currentHp + amount, maxHp);
+        hpSlider.value = currentHp;
     }
 
     public void HighlightTarget()

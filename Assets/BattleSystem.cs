@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST } 
+public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -21,8 +21,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject evilFirefighterPrefab;
     public GameObject evilDoctorPrefab;
 
-    public Transform playerBattleStation;// Parent for player characters
-    public Transform enemyBattleStation; // Parent for enemy characters
+    public Transform playerBattleStation;
+    public Transform enemyBattleStation;
 
     public List<Unit> allUnits = new List<Unit>();
     public List<GameObject> playerTeam = new List<GameObject>();
@@ -57,7 +57,6 @@ public class BattleSystem : MonoBehaviour
     public BattleHUDScript enemyHUD;
     public AbilityLoader abilityLoader;
 
-
     public TextMeshProUGUI NarratorText;
     public AbilityButton[] abilityButtons;
 
@@ -68,15 +67,11 @@ public class BattleSystem : MonoBehaviour
     public TurnOrder turnOrder;
     private int currentTurnIndex;
     private Unit lastPlayerCharacter;
-    // Start is called before the first frame update
+
     void Start()
     {
         state = BattleState.START;
-
-        // Start the SetupBattle coroutine
         StartCoroutine(SetupBattle());
-
-        //StartCoroutine(SetupBattle());
     }
 
     public IEnumerator SetupBattle()
@@ -84,33 +79,24 @@ public class BattleSystem : MonoBehaviour
         AssignTeams();
         InstantiateTeams();
 
-        //Load Abilities
         if (abilityLoader == null)
             Debug.LogError("AbilityLoader is not assigned!");
         abilityLoader.LoadAbilities(bearUnit);
         abilityLoader.LoadAbilities(foxUnit);
         abilityLoader.LoadAbilities(wolfUnit);
         abilityLoader.LoadAbilities(bunnyUnit);
-        Debug.Log("bunny abilities count"+ bunnyUnit.abilities.Count);
+
         yield return new WaitForSeconds(2f);
 
         NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " crew attacked them!";
 
-        // Adding all Gameobjects Unit to the allUnits list
         foreach (var unit in playerTeam)
-        {
             allUnits.Add(unit.GetComponent<Unit>());
-        }
         foreach (var unit in enemyTeam)
-        {
             allUnits.Add(unit.GetComponent<Unit>());
-        }
 
         turnOrder.MakeTurnOrder(allUnits.ToArray());
 
-        
-
-        //Setting Sliders for characters
         bearUnit.SetCharacterHpSlider();
         foxUnit.SetCharacterHpSlider();
         wolfUnit.SetCharacterHpSlider();
@@ -120,51 +106,30 @@ public class BattleSystem : MonoBehaviour
         enemyFirefighter3.SetCharacterHpSlider();
         enemyDoctor4.SetCharacterHpSlider();
 
-        
-
-        
-
-        //Setup HUD and Player buttons
-       /* playerHUD.SetPlayerHUD(bearUnit);
-        //Setup Ability Buttons for playerCharacters
-        for (int i = 0; i < abilityButtons.Length; i++)
-            if (i < bearUnit.abilities.Count)
-            {
-                abilityButtons[i].SetupButton(bearUnit, bearUnit.abilities[i], this);
-            }
-            else
-            {
-                Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character.");
-            }*/
         yield return new WaitForSeconds(2f);
 
-        //Start the Combat Rounds
         CombatTurn();
     }
 
     void SetupBattleUI(Unit unit)
     {
-        Debug.Log("SETUP UI");
-        //unit.LogUnitInfo();
-        //Setup HUD and Player buttons
         playerHUD.SetPlayerHUD(unit);
-        abilityLoader.LoadAbilities(unit);// NA SZOVAL AMIG A TEAMEKET NEM RENDEZTED EL RENDESEN, addig kell ez a loadabilities minden ui betolteskor, mert valszeg elcsuszik a prefab meg a unitokkal
-        //Debug.Log(unit.abilities[1]); nincs meg az abilities
-        //Setup Ability Buttons for playerCharacters
+
+        // Only reload abilities if not yet loaded (preserves cooldown state)
+        if (unit.abilities.Count == 0)
+            abilityLoader.LoadAbilities(unit);
+
         for (int i = 0; i < abilityButtons.Length; i++)
+        {
             if (i < unit.abilities.Count)
-            {
                 abilityButtons[i].SetupButton(unit, unit.abilities[i], this);
-            }
             else
-            {
-                Debug.Log($"Ability button at index {i} exceeds the number of abilities on the character." + "unit abilities count is" + unit.abilities.Count + "  ");
-            }
+                Debug.Log($"Ability button {i} exceeds ability count for {unit.unitName}.");
+        }
     }
 
     void AssignTeams()
     {
-        // Hardcoded assignment of prefabs to teams
         playerTeam.Add(bearPrefab);
         playerTeam.Add(bunnyPrefab);
         playerTeam.Add(foxPrefab);
@@ -194,84 +159,73 @@ public class BattleSystem : MonoBehaviour
 
             if (isPlayerTeam)
             {
-                if (prefab == bearPrefab)
-                {
-                    bearUnit = instantiatedUnit;
-                    Debug.Log("Player unit assigned1: " + bearUnit.unitName);
-                }
-                if (prefab == bunnyPrefab)
-                {
-                    bunnyUnit = instantiatedUnit;
-                    Debug.Log("Player unit assigned1: " + bunnyUnit.unitName);
-                }
-                if (prefab == foxPrefab)
-                {
-                    foxUnit = instantiatedUnit;
-                    Debug.Log("Player unit assigned1: " + foxUnit.unitName);
-                }
-                if (prefab == wolfPrefab)
-                {
-                    wolfUnit = instantiatedUnit;
-                    Debug.Log("Player unit assigned1: " + wolfUnit.unitName);
-                }
+                if (prefab == bearPrefab) bearUnit = instantiatedUnit;
+                else if (prefab == bunnyPrefab) bunnyUnit = instantiatedUnit;
+                else if (prefab == foxPrefab) foxUnit = instantiatedUnit;
+                else if (prefab == wolfPrefab) wolfUnit = instantiatedUnit;
             }
             else
             {
-                if (prefab == evilEngineerPrefab)
-                {
-                    enemyEngineer1 = instantiatedUnit;
-                    //Debug.Log("Enemy unit assigned1: " + enemyEngineer1.unitName);
-                }
-                if (prefab == evilPolicemanPrefab)
-                {
-                    enemyPolice2 = instantiatedUnit;
-                }
-                if (prefab == evilFirefighterPrefab)
-                {
-                    enemyFirefighter3 = instantiatedUnit;
-                }
-                if (prefab == evilDoctorPrefab)
-                {
-                    enemyDoctor4 = instantiatedUnit;
-                }
+                if (prefab == evilEngineerPrefab) enemyEngineer1 = instantiatedUnit;
+                else if (prefab == evilPolicemanPrefab) enemyPolice2 = instantiatedUnit;
+                else if (prefab == evilFirefighterPrefab) enemyFirefighter3 = instantiatedUnit;
+                else if (prefab == evilDoctorPrefab) enemyDoctor4 = instantiatedUnit;
             }
         }
     }
 
+    private List<Unit> GetLivingPlayerUnits() =>
+        allUnits.FindAll(u => u.isPlayerCharacter && !u.IsDead);
+
+    private List<Unit> GetLivingEnemyUnits() =>
+        allUnits.FindAll(u => !u.isPlayerCharacter && !u.IsDead);
+
     IEnumerator EnemyTurn(Unit enemyUnit)
     {
+        // Handle stun: skip turn if stunned
+        if (enemyUnit.isStunned > 0)
+        {
+            enemyUnit.isStunned--;
+            NarratorText.text = enemyUnit.unitName + " is stunned and loses their turn!";
+            yield return new WaitForSeconds(1.5f);
+            AdvanceTurn();
+            yield break;
+        }
+
         NarratorText.text = enemyUnit.unitName + " attacks!";
         yield return new WaitForSeconds(2f);
 
-        bool isDead = bearUnit.TakeDamage(enemyUnit.damage);
-        playerHUD.SetBearHP(bearUnit);
-        NarratorText.text = "The attack is successful " + bearUnit.unitName + " received " + enemyUnit.damage + " damage";
+        // Pick a random living player to attack
+        List<Unit> livingPlayers = GetLivingPlayerUnits();
+        if (livingPlayers.Count == 0)
+        {
+            state = BattleState.LOST;
+            EndBattle();
+            yield break;
+        }
 
-        //playerHUD.SetHP(bearUnit.currentHP);
+        Unit target = livingPlayers[UnityEngine.Random.Range(0, livingPlayers.Count)];
+        bool isDead = target.TakeDamage(enemyUnit.damage);
+
+        playerHUD.SetHP(target);
+        NarratorText.text = enemyUnit.unitName + " attacks " + target.unitName + " for " + enemyUnit.damage + " damage!";
 
         yield return new WaitForSeconds(2f);
 
-        if (isDead)
+        if (GetLivingPlayerUnits().Count == 0)
         {
             state = BattleState.LOST;
             EndBattle();
         }
         else
         {
-            currentTurnIndex++;
-            if (currentTurnIndex >= allUnits.Count)
-            {
-                StartNewRound();
-            }
-            else
-            {
-                CombatTurn();
-            }
+            AdvanceTurn();
         }
     }
 
     void StartNewRound()
     {
+        combatRound++;
         turnOrder.ResetSpeeds();
         turnOrder.RollForTurnOrder();
         currentTurnIndex = 0;
@@ -280,14 +234,34 @@ public class BattleSystem : MonoBehaviour
 
     void CombatTurn()
     {
+        // Skip dead units
+        int safetyCounter = 0;
+        while (safetyCounter < allUnits.Count)
+        {
+            Unit candidate = turnOrder.GetNextUnit(currentTurnIndex);
+            if (!candidate.IsDead) break;
+            currentTurnIndex++;
+            safetyCounter++;
+        }
+
         Unit currentUnit = turnOrder.GetNextUnit(currentTurnIndex);
-        //currentUnit.LogUnitInfo();
+
         if (currentUnit.isPlayerCharacter)
         {
+            // Handle stun: skip turn if stunned
+            if (currentUnit.isStunned > 0)
+            {
+                currentUnit.isStunned--;
+                NarratorText.text = currentUnit.unitName + " is stunned and loses their turn!";
+                TickCooldownsForUnit(currentUnit);
+                AdvanceTurn();
+                return;
+            }
+
             state = BattleState.PLAYERTURN;
-            lastPlayerCharacter= currentUnit;
+            lastPlayerCharacter = currentUnit;
             SetupBattleUI(currentUnit);
-            NarratorText.text = currentUnit.unitName + " turn starts now! Choose an ability!";
+            NarratorText.text = currentUnit.unitName + "'s turn! Choose an ability!";
         }
         else
         {
@@ -296,62 +270,85 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    void AdvanceTurn()
+    {
+        currentTurnIndex++;
+        if (currentTurnIndex >= allUnits.Count)
+            StartNewRound();
+        else
+            CombatTurn();
+    }
+
+    void TickCooldownsForUnit(Unit unit)
+    {
+        foreach (var ability in unit.abilities)
+            ability.TickCooldown();
+    }
+
     public void OnAbilityButtonClicked(BasicAbility ability)
     {
-        if (state == BattleState.PLAYERTURN)
+        if (state != BattleState.PLAYERTURN) return;
+
+        if (ability.IsOnCooldown())
         {
-            selectedAbility = ability;
-            NarratorText.text = "Select a target for " + ability.name;
+            NarratorText.text = ability.name + " is on cooldown for " + ability.currentCooldown + " more turn(s)!";
+            return;
         }
+
+        selectedAbility = ability;
+        NarratorText.text = "Select a target for " + ability.name;
     }
 
     public void OnEnemyClicked(Unit enemyUnit)
     {
         if (state != BattleState.PLAYERTURN || selectedAbility == null) return;
 
+        // Heal abilities target allies, not enemies — ignore enemy clicks
+        if (selectedAbility.isHeal)
+        {
+            NarratorText.text = selectedAbility.name + " can only target allies!";
+            return;
+        }
+
         enemyUnit.HighlightTarget();
         StartCoroutine(PlayerUseAbility(enemyUnit));
     }
 
+    public void OnAllyClicked(Unit allyUnit)
+    {
+        if (state != BattleState.PLAYERTURN || selectedAbility == null) return;
+        if (!selectedAbility.isHeal) return;
+
+        StartCoroutine(PlayerUseAbility(allyUnit));
+    }
+
     IEnumerator PlayerUseAbility(Unit targetUnit)
     {
-        selectedAbility.useAbility(targetUnit);
+        selectedAbility.UseAbility(targetUnit);
 
         NarratorText.text = lastPlayerCharacter.unitName + " used " + selectedAbility.name + " on " + targetUnit.unitName;
-        selectedAbility = null;
 
-      //  targetUnit.StopHighlighting();
+        TickCooldownsForUnit(lastPlayerCharacter);
+        selectedAbility = null;
 
         yield return new WaitForSeconds(1f);
 
-        if (targetUnit.currentHp <= 0)
+        if (GetLivingEnemyUnits().Count == 0)
         {
             state = BattleState.WON;
             EndBattle();
         }
         else
         {
-            currentTurnIndex++;
-            if (currentTurnIndex >= allUnits.Count)
-            {
-                StartNewRound();
-            }
-            else
-            {
-                CombatTurn();
-            }
+            AdvanceTurn();
         }
     }
 
     void EndBattle()
     {
         if (state == BattleState.WON)
-        {
             NarratorText.text = "You won the battle!";
-        }
         else if (state == BattleState.LOST)
-        {
             NarratorText.text = "You were defeated.";
-        }
     }
 }
