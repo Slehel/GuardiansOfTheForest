@@ -20,6 +20,9 @@ public class DungeonMapManager : MonoBehaviour
     public InventoryUIManager inventoryUIManager;
     public Button openInventoryButton;
 
+    [Header("Homebase")]
+    public Button returnToBaseButton;
+
     [Header("Scene Names")]
     public string battleSceneName = "FightSceneTest";
 
@@ -58,6 +61,9 @@ public class DungeonMapManager : MonoBehaviour
 
         if (openInventoryButton != null && inventoryUIManager != null)
             openInventoryButton.onClick.AddListener(() => inventoryUIManager.OpenInventory());
+
+        if (returnToBaseButton != null)
+            returnToBaseButton.onClick.AddListener(() => SceneManager.LoadScene("HomebaseScene"));
     }
 
     // ─────────────────────────────────────────────

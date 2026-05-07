@@ -9,7 +9,8 @@
       "bonusDamage": 3,
       "bonusDefense": 0,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 20
     },
     {
       "id": "sword_silver",
@@ -20,7 +21,8 @@
       "bonusDamage": 5,
       "bonusDefense": 0,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 20
     },
     {
       "id": "helmet_leather",
@@ -31,7 +33,8 @@
       "bonusDamage": 0,
       "bonusDefense": 2,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 18
     },
     {
       "id": "helmet_iron",
@@ -42,7 +45,8 @@
       "bonusDamage": 0,
       "bonusDefense": 4,
       "bonusSpeed": -1,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 18
     },
     {
       "id": "armor_leather",
@@ -53,7 +57,8 @@
       "bonusDamage": 0,
       "bonusDefense": 3,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 18
     },
     {
       "id": "armor_chainmail",
@@ -64,7 +69,8 @@
       "bonusDamage": 0,
       "bonusDefense": 5,
       "bonusSpeed": -1,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 18
     },
     {
       "id": "ring_swiftness",
@@ -75,7 +81,8 @@
       "bonusDamage": 0,
       "bonusDefense": 0,
       "bonusSpeed": 2,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 15
     },
     {
       "id": "amulet_vitality",
@@ -86,7 +93,8 @@
       "bonusDamage": 0,
       "bonusDefense": 0,
       "bonusSpeed": 0,
-      "bonusMaxHp": 8
+      "bonusMaxHp": 8,
+      "goldValue": 15
     },
     {
       "id": "shield_oaken",
@@ -97,7 +105,8 @@
       "bonusDamage": 0,
       "bonusDefense": 6,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 25
     },
     {
       "id": "quiver_hunters",
@@ -108,7 +117,8 @@
       "bonusDamage": 3,
       "bonusDefense": 0,
       "bonusSpeed": 1,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 25
     },
     {
       "id": "offhand_buckler",
@@ -119,7 +129,8 @@
       "bonusDamage": 1,
       "bonusDefense": 2,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 25
     },
     {
       "id": "offhand_dagger",
@@ -130,7 +141,8 @@
       "bonusDamage": 4,
       "bonusDefense": 0,
       "bonusSpeed": 0,
-      "bonusMaxHp": 0
+      "bonusMaxHp": 0,
+      "goldValue": 25
     }
   ]
 }

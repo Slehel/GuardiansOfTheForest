@@ -17,6 +17,7 @@ public class ItemData
     public int bonusDefense;
     public int bonusSpeed;
     public int bonusMaxHp;
+    public int goldValue;   // buy price in the Market; sell price = ceil(goldValue / 2)
 
     public static SlotType SlotTypeForItemType(ItemType type) => type switch
     {

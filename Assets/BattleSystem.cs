@@ -87,6 +87,12 @@ public class BattleSystem : MonoBehaviour
         abilityLoader.LoadAbilities(wolfUnit);
         abilityLoader.LoadAbilities(bunnyUnit);
 
+        // Apply Skill Forge upgrades from homebase
+        ApplyAbilityUpgrades(bearUnit);
+        ApplyAbilityUpgrades(foxUnit);
+        ApplyAbilityUpgrades(wolfUnit);
+        ApplyAbilityUpgrades(bunnyUnit);
+
         yield return new WaitForSeconds(2f);
 
         NarratorText.text = " Your Crew is in danger! " + enemyEngineer1.unitName + " crew attacked them!";
@@ -126,6 +132,21 @@ public class BattleSystem : MonoBehaviour
                 abilityButtons[i].SetupButton(unit, unit.abilities[i], this);
             else
                 Debug.Log($"Ability button {i} exceeds ability count for {unit.unitName}.");
+        }
+    }
+
+    void ApplyAbilityUpgrades(Unit unit)
+    {
+        if (GameManager.Instance == null) return;
+        foreach (var ability in unit.abilities)
+        {
+            int level = GameManager.Instance.GetAbilityUpgradeLevel(ability.name);
+            if (level <= 0) continue;
+            ability.damage       = Mathf.RoundToInt(ability.damage * (1f + level * 0.25f));
+            ability.cooldown     = Mathf.Max(1f, ability.cooldown - level * 0.5f);
+            ability.stunChance  += level * 10;
+            ability.poisonChance += level * 10;
+            ability.poisonDamage += level * 3;
         }
     }
 

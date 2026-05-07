@@ -1,0 +1,44 @@
+{
+  "heroes": [
+    {
+      "id": "deer",
+      "displayName": "Dara Deerfoot",
+      "unitClass": "Scout",
+      "damage": 5,
+      "defense": 0,
+      "speed": 6,
+      "maxHp": 22,
+      "recruitCost": 50
+    },
+    {
+      "id": "owl",
+      "displayName": "Owlric the Wise",
+      "unitClass": "Mage",
+      "damage": 10,
+      "defense": 0,
+      "speed": 3,
+      "maxHp": 20,
+      "recruitCost": 50
+    },
+    {
+      "id": "hedgehog",
+      "displayName": "Spike McThorn",
+      "unitClass": "Guard",
+      "damage": 5,
+      "defense": 3,
+      "speed": 2,
+      "maxHp": 38,
+      "recruitCost": 50
+    },
+    {
+      "id": "crow",
+      "displayName": "Corvus the Black",
+      "unitClass": "Trickster",
+      "damage": 8,
+      "defense": 0,
+      "speed": 5,
+      "maxHp": 26,
+      "recruitCost": 50
+    }
+  ]
+}
